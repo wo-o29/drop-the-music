@@ -10,11 +10,14 @@ interface MusicMarkerProps {
 const MusicMarker: React.FC<MusicMarkerProps> = ({ location, onClick }) => {
   const songCount = location.songs.length;
   
-  // Fixed positions for demo - in real app these would be based on actual coordinates
+  // Updated positions for 6 locations including new spots
   const positions = {
-    '1': { top: '35%', left: '25%' },
-    '2': { top: '55%', left: '65%' },
-    '3': { top: '25%', left: '75%' }
+    '1': { top: '35%', left: '25%' }, // 명동역
+    '2': { top: '55%', left: '15%' }, // 홍대입구역
+    '3': { top: '40%', left: '75%' }, // 역삼동 (가장 가까운 위치)
+    '4': { top: '65%', left: '70%' }, // 강남역
+    '5': { top: '75%', left: '45%' }, // 한강공원
+    '6': { top: '50%', left: '55%' }  // 이태원역
   };
   
   const position = positions[location.id as keyof typeof positions] || { top: '50%', left: '50%' };

@@ -51,7 +51,7 @@ const sampleSongs: Song[] = [
     liked: false,
     plays: 1200,
     droppedBy: 'musiclover_01',
-    location: '강남구 구금동',
+    location: '강남구 역삼동',
     comment: '회사 속 무미건조까지 쫄아당겨~',
     timestamp: '2시간 전'
   },
@@ -65,7 +65,7 @@ const sampleSongs: Song[] = [
     liked: true,
     plays: 2100,
     droppedBy: 'kpop_fan',
-    location: '홍대입구역',
+    location: '강남구 역삼동',
     comment: '이 길을 걸을 때마다 생각나는 노래',
     timestamp: '5시간 전'
   },
@@ -79,8 +79,8 @@ const sampleSongs: Song[] = [
     liked: false,
     plays: 3200,
     droppedBy: 'seoul_walker',
-    location: '명동역',
-    comment: '붐비는 명동에 딱 맞는 비트',
+    location: '강남구 역삼동',
+    comment: '붐비는 역삼에 딱 맞는 비트',
     timestamp: '1일 전'
   },
   {
@@ -155,27 +155,192 @@ const sampleSongs: Song[] = [
   }
 ];
 
+// Additional songs for other locations
+const additionalSongs: Song[] = [
+  {
+    id: '9',
+    title: 'NewJeans',
+    artist: 'NewJeans',
+    album: 'Get Up',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '2:48',
+    liked: false,
+    plays: 5200,
+    droppedBy: 'newjeans_fan',
+    location: '홍대입구역',
+    comment: '홍대 거리를 걸으며 듣기 좋은 노래',
+    timestamp: '3시간 전'
+  },
+  {
+    id: '10',
+    title: 'Hype Boy',
+    artist: 'NewJeans',
+    album: 'NewJeans',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '2:59',
+    liked: true,
+    plays: 4800,
+    droppedBy: 'street_musician',
+    location: '홍대입구역',
+    comment: '젊음이 느껴지는 홍대의 밤',
+    timestamp: '2시간 전'
+  },
+  {
+    id: '11',
+    title: 'Dynamite',
+    artist: 'BTS',
+    album: 'BE',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '3:19',
+    liked: false,
+    plays: 8900,
+    droppedBy: 'army_forever',
+    location: '명동역',
+    comment: '명동의 활기찬 에너지',
+    timestamp: '4시간 전'
+  },
+  {
+    id: '12',
+    title: 'Butter',
+    artist: 'BTS',
+    album: 'Butter',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '2:44',
+    liked: true,
+    plays: 7200,
+    droppedBy: 'tourist_guide',
+    location: '명동역',
+    comment: '관광객들이 가장 좋아하는 노래',
+    timestamp: '1시간 전'
+  },
+  {
+    id: '13',
+    title: 'Next Level',
+    artist: 'aespa',
+    album: 'Savage',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '3:30',
+    liked: false,
+    plays: 3400,
+    droppedBy: 'gangnam_style',
+    location: '강남역',
+    comment: '강남의 미래적인 느낌',
+    timestamp: '2시간 전'
+  },
+  {
+    id: '14',
+    title: 'Savage',
+    artist: 'aespa',
+    album: 'Savage',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '3:58',
+    liked: true,
+    plays: 2900,
+    droppedBy: 'tech_worker',
+    location: '강남역',
+    comment: '테크 기업들이 모인 강남답게',
+    timestamp: '5시간 전'
+  },
+  {
+    id: '15',
+    title: 'Spring Day',
+    artist: 'BTS',
+    album: 'You Never Walk Alone',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '3:48',
+    liked: false,
+    plays: 6100,
+    droppedBy: 'hangang_walker',
+    location: '한강공원',
+    comment: '한강을 바라보며 듣는 봄날',
+    timestamp: '6시간 전'
+  },
+  {
+    id: '16',
+    title: 'IU',
+    artist: 'Through the Night',
+    album: 'Palette',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '3:42',
+    liked: true,
+    plays: 4500,
+    droppedBy: 'night_rider',
+    location: '한강공원',
+    comment: '밤 한강의 로맨틱한 분위기',
+    timestamp: '3시간 전'
+  },
+  {
+    id: '17',
+    title: 'Lilac',
+    artist: 'IU',
+    album: 'Lilac',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '3:20',
+    liked: false,
+    plays: 3800,
+    droppedBy: 'itaewon_local',
+    location: '이태원역',
+    comment: '다국적 문화가 어우러진 이태원',
+    timestamp: '4시간 전'
+  },
+  {
+    id: '18',
+    title: 'Celebrity',
+    artist: 'IU',
+    album: 'Celebrity',
+    cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
+    duration: '3:15',
+    liked: true,
+    plays: 5600,
+    droppedBy: 'fashion_lover',
+    location: '이태원역',
+    comment: '세련된 이태원의 밤',
+    timestamp: '2시간 전'
+  }
+];
+
 const sampleLocations: Location[] = [
   {
     id: '1',
     lat: 37.5665,
     lng: 126.9780,
-    songs: [sampleSongs[0]],
+    songs: [additionalSongs[2], additionalSongs[3]], // 명동역 - BTS songs
     address: '서울특별시 중구 명동'
   },
   {
     id: '2',
-    lat: 37.5595,
-    lng: 126.9426,
-    songs: [sampleSongs[1], sampleSongs[2]],
+    lat: 37.5559,
+    lng: 126.9239,
+    songs: [additionalSongs[0], additionalSongs[1]], // 홍대입구역 - NewJeans songs
     address: '서울특별시 마포구 홍대'
   },
   {
     id: '3',
     lat: 37.5172,
     lng: 127.0473,
-    songs: sampleSongs, // 모든 8곡을 역삼동에 배치
+    songs: sampleSongs, // 역삼동 - 모든 8곡 (가장 가까운 위치)
     address: '서울특별시 강남구 역삼동'
+  },
+  {
+    id: '4',
+    lat: 37.4979,
+    lng: 127.0276,
+    songs: [additionalSongs[4], additionalSongs[5]], // 강남역 - aespa songs
+    address: '서울특별시 강남구 강남역'
+  },
+  {
+    id: '5',
+    lat: 37.5219,
+    lng: 126.9707,
+    songs: [additionalSongs[6], additionalSongs[7]], // 한강공원 - BTS & IU songs
+    address: '서울특별시 용산구 한강공원'
+  },
+  {
+    id: '6',
+    lat: 37.5344,
+    lng: 126.9794,
+    songs: [additionalSongs[8], additionalSongs[9]], // 이태원역 - IU songs
+    address: '서울특별시 용산구 이태원역'
   }
 ];
 

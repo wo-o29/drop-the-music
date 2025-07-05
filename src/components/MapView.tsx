@@ -166,8 +166,8 @@ const MapView: React.FC<MapViewProps> = ({
           />
         ))}
 
-        {/* Current Location Indicator */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+        {/* Current Location Indicator - Moved closer to 역삼동 */}
+        <div className="absolute top-[45%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 z-10">
           <div className="relative">
             <div className="w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-lg z-10 relative"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-blue-500/30 rounded-full animate-pulse"></div>

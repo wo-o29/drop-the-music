@@ -18,8 +18,8 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const itemWidth = 110; // Width of each song item including margin
-  const visibleItems = 3;
+  const visibleItems = 3; // Only show 3 items at a time
+  const itemWidth = window.innerWidth / 3; // Each item takes 1/3 of screen width
   const maxIndex = Math.max(0, songs.length - visibleItems);
 
   // Handle mouse/touch start
@@ -36,7 +36,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
     if (!isDragging || !scrollContainerRef.current) return;
     
     const x = clientX;
-    const walk = (x - startX) * 2; // Multiply by 2 for faster scrolling
+    const walk = (x - startX) * 2;
     scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -122,6 +122,11 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
     }
   }, [currentIndex, itemWidth]);
 
+  // Get visible songs (only 3 at a time)
+  const getVisibleSongs = () => {
+    return songs.slice(currentIndex, currentIndex + visibleItems);
+  };
+
   return (
     <div className="fixed bottom-16 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50 p-4">
       {/* Header */}
@@ -156,19 +161,14 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
         </div>
       </div>
 
-      {/* Songs Container */}
+      {/* Songs Container - Only show 3 songs */}
       <div
         ref={containerRef}
         className="relative overflow-hidden"
       >
         <div
           ref={scrollContainerRef}
-          className="flex space-x-3 overflow-x-hidden cursor-grab active:cursor-grabbing select-none"
-          style={{ 
-            width: `${Math.max(songs.length * itemWidth, window.innerWidth)}px`,
-            transform: `translateX(-${currentIndex * itemWidth}px)`,
-            transition: isDragging ? 'none' : 'transform 0.3s ease-out'
-          }}
+          className="flex space-x-4 overflow-x-hidden cursor-grab active:cursor-grabbing select-none"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -177,10 +177,11 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {songs.map((song, index) => (
+          {getVisibleSongs().map((song, index) => (
             <div
               key={song.id}
-              className="flex-shrink-0 w-24 group cursor-pointer"
+              className="flex-shrink-0 group cursor-pointer"
+              style={{ width: `${100/3}%` }}
               onClick={() => !isDragging && onSongSelect(song)}
             >
               {/* Album Cover */}
@@ -207,7 +208,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
               </div>
 
               {/* Song Info */}
-              <div className="text-center">
+              <div className="text-center px-2">
                 <h4 className="text-xs font-semibold text-white truncate group-hover:text-cyan-400 transition-colors duration-200">
                   {song.title}
                 </h4>
@@ -223,8 +224,8 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
 
               {/* Comment Preview */}
               {song.comment && (
-                <div className="mt-1 text-xs text-gray-500 text-center truncate">
-                  "{song.comment.length > 15 ? song.comment.substring(0, 15) + '...' : song.comment}"
+                <div className="mt-1 text-xs text-gray-500 text-center truncate px-2">
+                  "{song.comment.length > 20 ? song.comment.substring(0, 20) + '...' : song.comment}"
                 </div>
               )}
             </div>
