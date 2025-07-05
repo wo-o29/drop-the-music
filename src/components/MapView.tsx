@@ -178,30 +178,27 @@ const MapView: React.FC<MapViewProps> = ({
 
       {/* Fixed UI Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Location Info */}
-        <div className="absolute top-4 left-4 right-4 bg-gray-800/90 backdrop-blur-sm rounded-lg p-4 border border-gray-700 pointer-events-auto">
+        {/* Location Info - Compact Version */}
+        <div className="absolute top-4 left-4 right-4 bg-gray-800/90 backdrop-blur-sm rounded-lg p-3 border border-gray-700 pointer-events-auto">
           <div className="flex items-center justify-between">
             <div>
-              <div className="flex items-center space-x-2 mb-2">
-                <MapPin className="w-5 h-5 text-cyan-400" />
-                <span className="text-sm font-medium">현재 위치</span>
+              <div className="flex items-center space-x-2 mb-1">
+                <MapPin className="w-4 h-4 text-cyan-400" />
+                <span className="text-sm font-medium">강남구 역삼동</span>
               </div>
-              <div className="text-xs text-gray-300">
-                서울특별시 강남구 역삼동
-              </div>
-              <div className="text-xs text-gray-400 mt-1">
+              <div className="text-xs text-gray-400">
                 드랍된 음악 {totalSongs}곡
               </div>
             </div>
-            <div className="w-10 h-10 bg-cyan-400/20 rounded-full flex items-center justify-center">
-              <Music className="w-5 h-5 text-cyan-400" />
+            <div className="w-8 h-8 bg-cyan-400/20 rounded-full flex items-center justify-center">
+              <Music className="w-4 h-4 text-cyan-400" />
             </div>
           </div>
         </div>
 
         {/* Compass */}
-        <div className="absolute top-20 right-4 w-12 h-12 bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700 pointer-events-auto">
-          <Navigation className="w-6 h-6 text-cyan-400" />
+        <div className="absolute top-4 right-4 w-10 h-10 bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700 pointer-events-auto">
+          <Navigation className="w-5 h-5 text-cyan-400" />
         </div>
       </div>
 

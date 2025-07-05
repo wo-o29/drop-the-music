@@ -219,27 +219,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      {/* Header */}
-      <header className="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Music className="w-8 h-8 text-cyan-400" />
-            <h1 className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              히히
-            </h1>
-          </div>
-          <div className="flex items-center space-x-4">
-            <div className="text-sm text-gray-300">
-              L.3 스페셜 DJ
-            </div>
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-400 to-blue-400 flex items-center justify-center">
-              <User className="w-5 h-5 text-white" />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
+      {/* Main Content - Full Screen */}
       <main className="pb-20">
         {currentPage === 'map' && (
           <MapView

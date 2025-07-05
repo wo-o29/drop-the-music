@@ -18,7 +18,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const itemWidth = 120; // Width of each song item including margin
+  const itemWidth = 110; // Width of each song item including margin
   const visibleItems = 3;
   const maxIndex = Math.max(0, songs.length - visibleItems);
 
@@ -125,7 +125,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
   return (
     <div className="fixed bottom-16 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50 p-4">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <div>
           <h3 className="text-lg font-bold text-white">주변 음악</h3>
           <p className="text-sm text-gray-400">{songs.length}곡 발견</p>
@@ -163,8 +163,12 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
       >
         <div
           ref={scrollContainerRef}
-          className="flex space-x-4 overflow-x-hidden cursor-grab active:cursor-grabbing select-none"
-          style={{ width: `${songs.length * itemWidth}px` }}
+          className="flex space-x-3 overflow-x-hidden cursor-grab active:cursor-grabbing select-none"
+          style={{ 
+            width: `${Math.max(songs.length * itemWidth, window.innerWidth)}px`,
+            transform: `translateX(-${currentIndex * itemWidth}px)`,
+            transition: isDragging ? 'none' : 'transform 0.3s ease-out'
+          }}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -176,11 +180,11 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
           {songs.map((song, index) => (
             <div
               key={song.id}
-              className="flex-shrink-0 w-28 group cursor-pointer"
+              className="flex-shrink-0 w-24 group cursor-pointer"
               onClick={() => !isDragging && onSongSelect(song)}
             >
               {/* Album Cover */}
-              <div className="relative mb-3">
+              <div className="relative mb-2">
                 <div className="w-20 h-20 mx-auto rounded-xl overflow-hidden border-2 border-cyan-400/40 group-hover:border-cyan-400 transition-all duration-300 group-hover:scale-105 shadow-lg bg-gray-800">
                   <img 
                     src={song.cover} 
@@ -192,7 +196,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
                 
                 {/* Play Button Overlay */}
                 <div className="absolute inset-0 bg-black/60 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 mx-auto w-20">
-                  <Play className="w-6 h-6 text-white ml-1" />
+                  <Play className="w-5 h-5 text-white ml-0.5" />
                 </div>
 
                 {/* Pulse Effect */}
@@ -204,24 +208,23 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
 
               {/* Song Info */}
               <div className="text-center">
-                <h4 className="text-sm font-semibold text-white truncate group-hover:text-cyan-400 transition-colors duration-200">
+                <h4 className="text-xs font-semibold text-white truncate group-hover:text-cyan-400 transition-colors duration-200">
                   {song.title}
                 </h4>
-                <p className="text-xs text-gray-400 truncate mt-1">
+                <p className="text-xs text-gray-400 truncate mt-0.5">
                   {song.artist}
                 </p>
-                <div className="flex items-center justify-center space-x-1 mt-1">
+                <div className="flex items-center justify-center space-x-1 mt-0.5">
                   <span className="text-xs text-gray-500">
-                    {song.plays.toLocaleString()}
+                    {song.plays > 1000 ? `${Math.floor(song.plays / 1000)}k` : song.plays}
                   </span>
-                  <span className="text-xs text-gray-600">재생</span>
                 </div>
               </div>
 
               {/* Comment Preview */}
               {song.comment && (
-                <div className="mt-2 text-xs text-gray-500 text-center truncate">
-                  "{song.comment}"
+                <div className="mt-1 text-xs text-gray-500 text-center truncate">
+                  "{song.comment.length > 15 ? song.comment.substring(0, 15) + '...' : song.comment}"
                 </div>
               )}
             </div>
@@ -230,14 +233,14 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
       </div>
 
       {/* Progress Indicators */}
-      <div className="flex justify-center space-x-2 mt-4">
+      <div className="flex justify-center space-x-1 mt-3">
         {Array.from({ length: Math.ceil(songs.length / visibleItems) }).map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index * visibleItems)}
-            className={`w-2 h-2 rounded-full transition-all duration-200 ${
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
               Math.floor(currentIndex / visibleItems) === index
-                ? 'bg-cyan-400 w-6'
+                ? 'bg-cyan-400 w-4'
                 : 'bg-gray-600 hover:bg-gray-500'
             }`}
           />
