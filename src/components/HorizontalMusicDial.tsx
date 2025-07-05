@@ -185,9 +185,9 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
                 style={{ width: `${100/3}%` }}
                 onClick={() => !isDragging && onSongSelect(song)}
               >
-                {/* Album Cover */}
-                <div className="relative mb-3">
-                  <div className="w-20 h-20 mx-auto rounded-xl overflow-hidden border-2 border-cyan-400/50 group-hover:border-cyan-400 transition-all duration-300 group-hover:scale-105 shadow-lg bg-gray-800">
+                {/* Album Cover - Reduced size */}
+                <div className="relative mb-2">
+                  <div className="w-16 h-16 mx-auto rounded-xl overflow-hidden border-2 border-cyan-400/50 group-hover:border-cyan-400 transition-all duration-300 group-hover:scale-105 shadow-lg bg-gray-800">
                     <img 
                       src={song.cover} 
                       alt={song.title}
@@ -197,19 +197,19 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
                   </div>
                   
                   {/* Play Button Overlay */}
-                  <div className="absolute inset-0 bg-black/60 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 mx-auto w-20">
-                    <Play className="w-5 h-5 text-white ml-0.5" />
+                  <div className="absolute inset-0 bg-black/60 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 mx-auto w-16">
+                    <Play className="w-4 h-4 text-white ml-0.5" />
                   </div>
 
                   {/* Pulse Effect */}
-                  <div className="absolute inset-0 bg-cyan-400/20 rounded-xl animate-pulse -z-10 group-hover:bg-cyan-400/30 mx-auto w-20"></div>
+                  <div className="absolute inset-0 bg-cyan-400/20 rounded-xl animate-pulse -z-10 group-hover:bg-cyan-400/30 mx-auto w-16"></div>
                   
                   {/* Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-blue-400/10 rounded-xl blur-md -z-20 group-hover:from-cyan-400/20 group-hover:to-blue-400/20 transition-all duration-300 mx-auto w-20"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-blue-400/10 rounded-xl blur-md -z-20 group-hover:from-cyan-400/20 group-hover:to-blue-400/20 transition-all duration-300 mx-auto w-16"></div>
                 </div>
 
                 {/* Song Info */}
-                <div className="text-center px-2">
+                <div className="text-center px-1">
                   <h4 className="text-xs font-semibold text-white truncate group-hover:text-cyan-400 transition-colors duration-200">
                     {song.title}
                   </h4>
@@ -223,10 +223,12 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
                   </div>
                 </div>
 
-                {/* Comment Preview */}
+                {/* Comment Preview - Better spacing and truncation */}
                 {song.comment && (
-                  <div className="mt-2 text-xs text-gray-300 text-center truncate px-2">
-                    "{song.comment.length > 20 ? song.comment.substring(0, 20) + '...' : song.comment}"
+                  <div className="mt-1 text-xs text-gray-300 text-center px-1">
+                    <div className="truncate">
+                      "{song.comment.length > 15 ? song.comment.substring(0, 15) + '...' : song.comment}"
+                    </div>
                   </div>
                 )}
               </div>

@@ -383,12 +383,9 @@ function App() {
     setSelectedLocation(location);
   };
 
-  const handleMapClick = () => {
-    // Close music player when clicking on map
-    if (currentSong) {
-      setCurrentSong(null);
-      setIsPlaying(false);
-    }
+  const handleCloseMusicPlayer = () => {
+    setCurrentSong(null);
+    setIsPlaying(false);
   };
 
   // Get nearby songs from the closest location (역삼동 - location with id '3')
@@ -397,6 +394,28 @@ function App() {
   };
 
   const nearbyLocation = getNearbyLocation();
+
+  // Add click handler to close music player when clicking outside
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      // Check if the click is outside the music player and dial areas
+      const target = e.target as HTMLElement;
+      const musicPlayer = document.querySelector('[data-music-player]');
+      const musicDial = document.querySelector('[data-music-dial]');
+      
+      if (currentSong && musicPlayer && musicDial) {
+        const isClickInsidePlayer = musicPlayer.contains(target);
+        const isClickInsideDial = musicDial.contains(target);
+        
+        if (!isClickInsidePlayer && !isClickInsideDial) {
+          handleCloseMusicPlayer();
+        }
+      }
+    };
+
+    document.addEventListener('click', handleGlobalClick);
+    return () => document.removeEventListener('click', handleGlobalClick);
+  }, [currentSong]);
 
   return (
     <div className="h-screen bg-gray-900 text-white flex flex-col overflow-hidden">
@@ -412,14 +431,13 @@ function App() {
                 onLocationSelect={handleLocationSelect}
                 onSongSelect={handleSongSelect}
                 onLikeSong={handleLikeSong}
-                onMapClick={handleMapClick}
               />
             </div>
 
             {/* Music Dial Area - Overlaid on map with transparent background */}
             {nearbyLocation && (
               <div className="absolute bottom-16 left-0 right-0 h-48 pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-gray-900/20 to-transparent pointer-events-auto">
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-gray-900/20 to-transparent pointer-events-auto" data-music-dial>
                   <HorizontalMusicDial
                     songs={nearbyLocation.songs}
                     onSongSelect={handleSongSelect}
@@ -437,7 +455,7 @@ function App() {
 
         {/* Music Player - Overlay when song is playing */}
         {currentSong && (
-          <div className="absolute left-0 right-0 bottom-20">
+          <div className="absolute left-0 right-0 bottom-20" data-music-player>
             <MusicPlayer
               song={currentSong}
               isPlaying={isPlaying}
