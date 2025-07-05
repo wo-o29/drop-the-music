@@ -3,7 +3,7 @@ import { MapPin, Music, Navigation } from 'lucide-react';
 import { Location, Song } from '../App';
 import MusicMarker from './MusicMarker';
 import LocationModal from './LocationModal';
-import NearbyMusicDial from './NearbyMusicDial';
+import HorizontalMusicDial from './HorizontalMusicDial';
 
 interface MapViewProps {
   locations: Location[];
@@ -199,23 +199,19 @@ const MapView: React.FC<MapViewProps> = ({
           </div>
         </div>
 
-        {/* Always Visible Nearby Music Dial */}
-        {nearbyLocation && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
-            <NearbyMusicDial
-              songs={nearbyLocation.songs}
-              onSongSelect={onSongSelect}
-              onClose={() => {}} // 항상 표시되므로 닫기 기능 없음
-              alwaysVisible={true}
-            />
-          </div>
-        )}
-
         {/* Compass */}
         <div className="absolute top-20 right-4 w-12 h-12 bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700 pointer-events-auto">
           <Navigation className="w-6 h-6 text-cyan-400" />
         </div>
       </div>
+
+      {/* Horizontal Music Dial - Always Visible */}
+      {nearbyLocation && (
+        <HorizontalMusicDial
+          songs={nearbyLocation.songs}
+          onSongSelect={onSongSelect}
+        />
+      )}
 
       {/* Location Modal */}
       {showLocationModal && selectedLocation && (
