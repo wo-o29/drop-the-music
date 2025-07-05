@@ -391,11 +391,11 @@ function App() {
   const nearbyLocation = getNearbyLocation();
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col">
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Map Area - Takes remaining space */}
-        <div className="flex-1 relative">
+    <div className="h-screen bg-gray-900 text-white flex flex-col overflow-hidden">
+      {/* Main Content Area - Takes remaining space */}
+      <div className="flex-1 flex flex-col min-h-0">
+        {/* Map/Content Area - Takes remaining space after dial */}
+        <div className={`flex-1 relative overflow-hidden ${currentPage === 'map' ? 'pb-40' : ''}`}>
           {currentPage === 'map' && (
             <MapView
               locations={locations}
@@ -419,7 +419,7 @@ function App() {
 
         {/* Music Dial Area - Fixed height, only visible on map page */}
         {currentPage === 'map' && nearbyLocation && (
-          <div className="h-40 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50">
+          <div className="absolute bottom-16 left-0 right-0 h-40 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50">
             <HorizontalMusicDial
               songs={nearbyLocation.songs}
               onSongSelect={handleSongSelect}
@@ -429,7 +429,7 @@ function App() {
 
         {/* Music Player - Overlay when song is playing */}
         {currentSong && (
-          <div className="absolute bottom-16 left-0 right-0">
+          <div className={`absolute left-0 right-0 ${currentPage === 'map' ? 'bottom-56' : 'bottom-16'}`}>
             <MusicPlayer
               song={currentSong}
               isPlaying={isPlaying}
@@ -443,7 +443,7 @@ function App() {
       </div>
 
       {/* Navigation Tab Area - Fixed at bottom */}
-      <div className="h-16">
+      <div className="h-16 flex-shrink-0">
         <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
       </div>
     </div>
