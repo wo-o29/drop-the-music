@@ -393,11 +393,11 @@ function App() {
   return (
     <div className="h-screen bg-gray-900 text-white flex flex-col overflow-hidden">
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-0">
+      <div className="flex-1 flex flex-col min-h-0 relative">
         {currentPage === 'map' ? (
           <>
-            {/* Map Area - Takes remaining space */}
-            <div className="flex-1 relative overflow-hidden">
+            {/* Map Area - Takes full space */}
+            <div className="absolute inset-0">
               <MapView
                 locations={locations}
                 selectedLocation={selectedLocation}
@@ -407,10 +407,10 @@ function App() {
               />
             </div>
 
-            {/* Music Dial Area - Fixed height with transparent background */}
+            {/* Music Dial Area - Overlaid on map with transparent background */}
             {nearbyLocation && (
-              <div className="h-44 flex-shrink-0 relative">
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent backdrop-blur-sm">
+              <div className="absolute bottom-16 left-0 right-0 h-48 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-gray-900/20 to-transparent pointer-events-auto">
                   <HorizontalMusicDial
                     songs={nearbyLocation.songs}
                     onSongSelect={handleSongSelect}
@@ -442,7 +442,7 @@ function App() {
       </div>
 
       {/* Navigation Tab Area - Fixed at bottom */}
-      <div className="h-16 flex-shrink-0">
+      <div className="h-16 flex-shrink-0 relative z-50">
         <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
       </div>
     </div>

@@ -128,12 +128,12 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
   };
 
   return (
-    <div className="h-full p-6 flex flex-col">
+    <div className="h-full p-4 flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <div>
           <h3 className="text-lg font-bold text-white">주변 음악</h3>
-          <p className="text-sm text-gray-300">{songs.length}곡 발견</p>
+          <p className="text-sm text-gray-200">{songs.length}곡 발견</p>
         </div>
         <div className="flex items-center space-x-2">
           <button
@@ -141,8 +141,8 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
             disabled={currentIndex === 0}
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
               currentIndex === 0
-                ? 'bg-gray-800/30 text-gray-600 cursor-not-allowed'
-                : 'bg-gray-800/60 text-gray-300 hover:bg-gray-700/60 hover:text-white'
+                ? 'bg-gray-800/20 text-gray-600 cursor-not-allowed'
+                : 'bg-gray-800/40 text-gray-200 hover:bg-gray-700/50 hover:text-white'
             }`}
           >
             <ChevronLeft className="w-5 h-5" />
@@ -152,8 +152,8 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
             disabled={currentIndex >= maxIndex}
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
               currentIndex >= maxIndex
-                ? 'bg-gray-800/30 text-gray-600 cursor-not-allowed'
-                : 'bg-gray-800/60 text-gray-300 hover:bg-gray-700/60 hover:text-white'
+                ? 'bg-gray-800/20 text-gray-600 cursor-not-allowed'
+                : 'bg-gray-800/40 text-gray-200 hover:bg-gray-700/50 hover:text-white'
             }`}
           >
             <ChevronRight className="w-5 h-5" />
@@ -187,7 +187,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
               >
                 {/* Album Cover */}
                 <div className="relative mb-3">
-                  <div className="w-20 h-20 mx-auto rounded-xl overflow-hidden border-2 border-cyan-400/40 group-hover:border-cyan-400 transition-all duration-300 group-hover:scale-105 shadow-lg bg-gray-800">
+                  <div className="w-20 h-20 mx-auto rounded-xl overflow-hidden border-2 border-cyan-400/50 group-hover:border-cyan-400 transition-all duration-300 group-hover:scale-105 shadow-lg bg-gray-800">
                     <img 
                       src={song.cover} 
                       alt={song.title}
@@ -213,11 +213,11 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
                   <h4 className="text-xs font-semibold text-white truncate group-hover:text-cyan-400 transition-colors duration-200">
                     {song.title}
                   </h4>
-                  <p className="text-xs text-gray-300 truncate mt-0.5">
+                  <p className="text-xs text-gray-200 truncate mt-0.5">
                     {song.artist}
                   </p>
                   <div className="flex items-center justify-center space-x-1 mt-1">
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-gray-300">
                       {song.plays > 1000 ? `${Math.floor(song.plays / 1000)}k` : song.plays}
                     </span>
                   </div>
@@ -225,7 +225,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
 
                 {/* Comment Preview */}
                 {song.comment && (
-                  <div className="mt-2 text-xs text-gray-400 text-center truncate px-2">
+                  <div className="mt-2 text-xs text-gray-300 text-center truncate px-2">
                     "{song.comment.length > 20 ? song.comment.substring(0, 20) + '...' : song.comment}"
                   </div>
                 )}
@@ -236,7 +236,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
       </div>
 
       {/* Progress Indicators */}
-      <div className="flex justify-center space-x-1 mt-4">
+      <div className="flex justify-center space-x-1 mt-3">
         {Array.from({ length: Math.ceil(songs.length / visibleItems) }).map((_, index) => (
           <button
             key={index}
@@ -244,7 +244,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
             className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
               Math.floor(currentIndex / visibleItems) === index
                 ? 'bg-cyan-400 w-4'
-                : 'bg-gray-500 hover:bg-gray-400'
+                : 'bg-gray-400 hover:bg-gray-300'
             }`}
           />
         ))}
