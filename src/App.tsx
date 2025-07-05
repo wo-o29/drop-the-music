@@ -383,6 +383,14 @@ function App() {
     setSelectedLocation(location);
   };
 
+  const handleMapClick = () => {
+    // Close music player when clicking on map
+    if (currentSong) {
+      setCurrentSong(null);
+      setIsPlaying(false);
+    }
+  };
+
   // Get nearby songs from the closest location (역삼동 - location with id '3')
   const getNearbyLocation = () => {
     return locations.find(location => location.id === '3');
@@ -404,6 +412,7 @@ function App() {
                 onLocationSelect={handleLocationSelect}
                 onSongSelect={handleSongSelect}
                 onLikeSong={handleLikeSong}
+                onMapClick={handleMapClick}
               />
             </div>
 

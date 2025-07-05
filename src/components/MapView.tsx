@@ -10,6 +10,7 @@ interface MapViewProps {
   onLocationSelect: (location: Location) => void;
   onSongSelect: (song: Song) => void;
   onLikeSong: (songId: string) => void;
+  onMapClick: () => void;
 }
 
 const MapView: React.FC<MapViewProps> = ({
@@ -17,7 +18,8 @@ const MapView: React.FC<MapViewProps> = ({
   selectedLocation,
   onLocationSelect,
   onSongSelect,
-  onLikeSong
+  onLikeSong,
+  onMapClick
 }) => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
@@ -25,9 +27,17 @@ const MapView: React.FC<MapViewProps> = ({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const mapRef = useRef<HTMLDivElement>(null);
 
-  const handleMarkerClick = (location: Location) => {
+  const handleMarkerClick = (location: Location, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent map click event
     onLocationSelect(location);
     setShowLocationModal(true);
+  };
+
+  const handleMapBackgroundClick = (e: React.MouseEvent) => {
+    // Only trigger if clicking on the map background, not on markers or UI elements
+    if (e.target === e.currentTarget) {
+      onMapClick();
+    }
   };
 
   // Mouse/Touch handlers for map dragging
@@ -91,6 +101,7 @@ const MapView: React.FC<MapViewProps> = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onClick={handleMapBackgroundClick}
         style={{
           transform: `translate(${mapPosition.x}px, ${mapPosition.y}px)`,
           transition: isDragging ? 'none' : 'transform 0.3s ease-out'
@@ -155,7 +166,7 @@ const MapView: React.FC<MapViewProps> = ({
           <MusicMarker
             key={location.id}
             location={location}
-            onClick={() => handleMarkerClick(location)}
+            onClick={(e) => handleMarkerClick(location, e)}
           />
         ))}
 

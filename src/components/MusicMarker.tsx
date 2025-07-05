@@ -4,7 +4,7 @@ import { Location } from '../App';
 
 interface MusicMarkerProps {
   location: Location;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
 }
 
 const MusicMarker: React.FC<MusicMarkerProps> = ({ location, onClick }) => {
@@ -21,6 +21,11 @@ const MusicMarker: React.FC<MusicMarkerProps> = ({ location, onClick }) => {
   };
   
   const position = positions[location.id as keyof typeof positions] || { top: '50%', left: '50%' };
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent event bubbling to map
+    onClick(e);
+  };
 
   const renderMarkerContent = () => {
     if (songCount === 1) {
@@ -58,7 +63,7 @@ const MusicMarker: React.FC<MusicMarkerProps> = ({ location, onClick }) => {
     <div
       className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-20"
       style={position}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {renderMarkerContent()}
       
