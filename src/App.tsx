@@ -392,44 +392,43 @@ function App() {
 
   return (
     <div className="h-screen bg-gray-900 text-white flex flex-col overflow-hidden">
-      {/* Main Content Area - Takes remaining space */}
+      {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-h-0">
-        {/* Map/Content Area - Takes remaining space after dial */}
-        <div className={`flex-1 relative overflow-hidden ${currentPage === 'map' ? 'pb-40' : ''}`}>
-          {currentPage === 'map' && (
-            <MapView
-              locations={locations}
-              selectedLocation={selectedLocation}
-              onLocationSelect={handleLocationSelect}
-              onSongSelect={handleSongSelect}
-              onLikeSong={handleLikeSong}
-            />
-          )}
-          {currentPage === 'profile' && (
-            <div className="h-full overflow-y-auto">
-              <ProfilePage user={currentUser} />
+        {currentPage === 'map' ? (
+          <>
+            {/* Map Area - Takes remaining space */}
+            <div className="flex-1 relative overflow-hidden">
+              <MapView
+                locations={locations}
+                selectedLocation={selectedLocation}
+                onLocationSelect={handleLocationSelect}
+                onSongSelect={handleSongSelect}
+                onLikeSong={handleLikeSong}
+              />
             </div>
-          )}
-          {currentPage === 'drop' && (
-            <div className="h-full overflow-y-auto">
-              <DropPage onSongSelect={handleSongSelect} />
-            </div>
-          )}
-        </div>
 
-        {/* Music Dial Area - Fixed height, only visible on map page */}
-        {currentPage === 'map' && nearbyLocation && (
-          <div className="absolute bottom-16 left-0 right-0 h-40 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50">
-            <HorizontalMusicDial
-              songs={nearbyLocation.songs}
-              onSongSelect={handleSongSelect}
-            />
+            {/* Music Dial Area - Fixed height with transparent background */}
+            {nearbyLocation && (
+              <div className="h-44 flex-shrink-0 relative">
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent backdrop-blur-sm">
+                  <HorizontalMusicDial
+                    songs={nearbyLocation.songs}
+                    onSongSelect={handleSongSelect}
+                  />
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="flex-1 overflow-y-auto">
+            {currentPage === 'profile' && <ProfilePage user={currentUser} />}
+            {currentPage === 'drop' && <DropPage onSongSelect={handleSongSelect} />}
           </div>
         )}
 
         {/* Music Player - Overlay when song is playing */}
         {currentSong && (
-          <div className={`absolute left-0 right-0 ${currentPage === 'map' ? 'bottom-56' : 'bottom-16'}`}>
+          <div className="absolute left-0 right-0 bottom-20">
             <MusicPlayer
               song={currentSong}
               isPlaying={isPlaying}
