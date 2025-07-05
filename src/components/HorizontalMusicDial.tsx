@@ -128,7 +128,7 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
   };
 
   return (
-    <div className="fixed bottom-16 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50 p-4">
+    <div className="h-full p-4 flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div>
@@ -162,74 +162,76 @@ const HorizontalMusicDial: React.FC<HorizontalMusicDialProps> = ({
       </div>
 
       {/* Songs Container - Only show 3 songs */}
-      <div
-        ref={containerRef}
-        className="relative overflow-hidden"
-      >
+      <div className="flex-1 flex items-center">
         <div
-          ref={scrollContainerRef}
-          className="flex space-x-4 overflow-x-hidden cursor-grab active:cursor-grabbing select-none"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          ref={containerRef}
+          className="relative overflow-hidden w-full"
         >
-          {getVisibleSongs().map((song, index) => (
-            <div
-              key={song.id}
-              className="flex-shrink-0 group cursor-pointer"
-              style={{ width: `${100/3}%` }}
-              onClick={() => !isDragging && onSongSelect(song)}
-            >
-              {/* Album Cover */}
-              <div className="relative mb-2">
-                <div className="w-20 h-20 mx-auto rounded-xl overflow-hidden border-2 border-cyan-400/40 group-hover:border-cyan-400 transition-all duration-300 group-hover:scale-105 shadow-lg bg-gray-800">
-                  <img 
-                    src={song.cover} 
-                    alt={song.title}
-                    className="w-full h-full object-cover"
-                    draggable={false}
-                  />
-                </div>
-                
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 bg-black/60 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 mx-auto w-20">
-                  <Play className="w-5 h-5 text-white ml-0.5" />
+          <div
+            ref={scrollContainerRef}
+            className="flex space-x-4 overflow-x-hidden cursor-grab active:cursor-grabbing select-none"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {getVisibleSongs().map((song, index) => (
+              <div
+                key={song.id}
+                className="flex-shrink-0 group cursor-pointer"
+                style={{ width: `${100/3}%` }}
+                onClick={() => !isDragging && onSongSelect(song)}
+              >
+                {/* Album Cover */}
+                <div className="relative mb-2">
+                  <div className="w-20 h-20 mx-auto rounded-xl overflow-hidden border-2 border-cyan-400/40 group-hover:border-cyan-400 transition-all duration-300 group-hover:scale-105 shadow-lg bg-gray-800">
+                    <img 
+                      src={song.cover} 
+                      alt={song.title}
+                      className="w-full h-full object-cover"
+                      draggable={false}
+                    />
+                  </div>
+                  
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 bg-black/60 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 mx-auto w-20">
+                    <Play className="w-5 h-5 text-white ml-0.5" />
+                  </div>
+
+                  {/* Pulse Effect */}
+                  <div className="absolute inset-0 bg-cyan-400/20 rounded-xl animate-pulse -z-10 group-hover:bg-cyan-400/30 mx-auto w-20"></div>
+                  
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-blue-400/10 rounded-xl blur-md -z-20 group-hover:from-cyan-400/20 group-hover:to-blue-400/20 transition-all duration-300 mx-auto w-20"></div>
                 </div>
 
-                {/* Pulse Effect */}
-                <div className="absolute inset-0 bg-cyan-400/20 rounded-xl animate-pulse -z-10 group-hover:bg-cyan-400/30 mx-auto w-20"></div>
-                
-                {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-blue-400/10 rounded-xl blur-md -z-20 group-hover:from-cyan-400/20 group-hover:to-blue-400/20 transition-all duration-300 mx-auto w-20"></div>
+                {/* Song Info */}
+                <div className="text-center px-2">
+                  <h4 className="text-xs font-semibold text-white truncate group-hover:text-cyan-400 transition-colors duration-200">
+                    {song.title}
+                  </h4>
+                  <p className="text-xs text-gray-400 truncate mt-0.5">
+                    {song.artist}
+                  </p>
+                  <div className="flex items-center justify-center space-x-1 mt-0.5">
+                    <span className="text-xs text-gray-500">
+                      {song.plays > 1000 ? `${Math.floor(song.plays / 1000)}k` : song.plays}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Comment Preview */}
+                {song.comment && (
+                  <div className="mt-1 text-xs text-gray-500 text-center truncate px-2">
+                    "{song.comment.length > 20 ? song.comment.substring(0, 20) + '...' : song.comment}"
+                  </div>
+                )}
               </div>
-
-              {/* Song Info */}
-              <div className="text-center px-2">
-                <h4 className="text-xs font-semibold text-white truncate group-hover:text-cyan-400 transition-colors duration-200">
-                  {song.title}
-                </h4>
-                <p className="text-xs text-gray-400 truncate mt-0.5">
-                  {song.artist}
-                </p>
-                <div className="flex items-center justify-center space-x-1 mt-0.5">
-                  <span className="text-xs text-gray-500">
-                    {song.plays > 1000 ? `${Math.floor(song.plays / 1000)}k` : song.plays}
-                  </span>
-                </div>
-              </div>
-
-              {/* Comment Preview */}
-              {song.comment && (
-                <div className="mt-1 text-xs text-gray-500 text-center truncate px-2">
-                  "{song.comment.length > 20 ? song.comment.substring(0, 20) + '...' : song.comment}"
-                </div>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 

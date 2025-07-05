@@ -3,7 +3,6 @@ import { MapPin, Music, Navigation } from 'lucide-react';
 import { Location, Song } from '../App';
 import MusicMarker from './MusicMarker';
 import LocationModal from './LocationModal';
-import HorizontalMusicDial from './HorizontalMusicDial';
 
 interface MapViewProps {
   locations: Location[];
@@ -25,11 +24,6 @@ const MapView: React.FC<MapViewProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const mapRef = useRef<HTMLDivElement>(null);
-
-  // Get nearby songs from the closest location (역삼동 - location with id '3')
-  const getNearbyLocation = () => {
-    return locations.find(location => location.id === '3');
-  };
 
   const handleMarkerClick = (location: Location) => {
     onLocationSelect(location);
@@ -82,11 +76,10 @@ const MapView: React.FC<MapViewProps> = ({
     setIsDragging(false);
   };
 
-  const nearbyLocation = getNearbyLocation();
   const totalSongs = locations.reduce((sum, location) => sum + location.songs.length, 0);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden">
       {/* Map Container */}
       <div 
         ref={mapRef}
@@ -166,7 +159,7 @@ const MapView: React.FC<MapViewProps> = ({
           />
         ))}
 
-        {/* Current Location Indicator - Moved closer to 역삼동 */}
+        {/* Current Location Indicator - Close to 역삼동 */}
         <div className="absolute top-[45%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 z-10">
           <div className="relative">
             <div className="w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-lg z-10 relative"></div>
@@ -201,14 +194,6 @@ const MapView: React.FC<MapViewProps> = ({
           <Navigation className="w-5 h-5 text-cyan-400" />
         </div>
       </div>
-
-      {/* Horizontal Music Dial - Always Visible */}
-      {nearbyLocation && (
-        <HorizontalMusicDial
-          songs={nearbyLocation.songs}
-          onSongSelect={onSongSelect}
-        />
-      )}
 
       {/* Location Modal */}
       {showLocationModal && selectedLocation && (

@@ -5,6 +5,7 @@ import MusicPlayer from './components/MusicPlayer';
 import ProfilePage from './components/ProfilePage';
 import DropPage from './components/DropPage';
 import Navigation from './components/Navigation';
+import HorizontalMusicDial from './components/HorizontalMusicDial';
 
 export interface Song {
   id: string;
@@ -257,8 +258,8 @@ const additionalSongs: Song[] = [
   },
   {
     id: '16',
-    title: 'IU',
-    artist: 'Through the Night',
+    title: 'Through the Night',
+    artist: 'IU',
     album: 'Palette',
     cover: 'https://images.pexels.com/photos/6505089/pexels-photo-6505089.jpeg?auto=compress&cs=tinysrgb&w=300&h=300',
     duration: '3:42',
@@ -382,41 +383,69 @@ function App() {
     setSelectedLocation(location);
   };
 
+  // Get nearby songs from the closest location (역삼동 - location with id '3')
+  const getNearbyLocation = () => {
+    return locations.find(location => location.id === '3');
+  };
+
+  const nearbyLocation = getNearbyLocation();
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      {/* Main Content - Full Screen */}
-      <main className="pb-20">
-        {currentPage === 'map' && (
-          <MapView
-            locations={locations}
-            selectedLocation={selectedLocation}
-            onLocationSelect={handleLocationSelect}
-            onSongSelect={handleSongSelect}
-            onLikeSong={handleLikeSong}
-          />
-        )}
-        {currentPage === 'profile' && (
-          <ProfilePage user={currentUser} />
-        )}
-        {currentPage === 'drop' && (
-          <DropPage onSongSelect={handleSongSelect} />
-        )}
-      </main>
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col">
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Map Area - Takes remaining space */}
+        <div className="flex-1 relative">
+          {currentPage === 'map' && (
+            <MapView
+              locations={locations}
+              selectedLocation={selectedLocation}
+              onLocationSelect={handleLocationSelect}
+              onSongSelect={handleSongSelect}
+              onLikeSong={handleLikeSong}
+            />
+          )}
+          {currentPage === 'profile' && (
+            <div className="h-full overflow-y-auto">
+              <ProfilePage user={currentUser} />
+            </div>
+          )}
+          {currentPage === 'drop' && (
+            <div className="h-full overflow-y-auto">
+              <DropPage onSongSelect={handleSongSelect} />
+            </div>
+          )}
+        </div>
 
-      {/* Music Player */}
-      {currentSong && (
-        <MusicPlayer
-          song={currentSong}
-          isPlaying={isPlaying}
-          onPlayPause={() => setIsPlaying(!isPlaying)}
-          onNext={() => console.log('Next song')}
-          onPrevious={() => console.log('Previous song')}
-          onLike={() => handleLikeSong(currentSong.id)}
-        />
-      )}
+        {/* Music Dial Area - Fixed height, only visible on map page */}
+        {currentPage === 'map' && nearbyLocation && (
+          <div className="h-40 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50">
+            <HorizontalMusicDial
+              songs={nearbyLocation.songs}
+              onSongSelect={handleSongSelect}
+            />
+          </div>
+        )}
 
-      {/* Navigation */}
-      <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
+        {/* Music Player - Overlay when song is playing */}
+        {currentSong && (
+          <div className="absolute bottom-16 left-0 right-0">
+            <MusicPlayer
+              song={currentSong}
+              isPlaying={isPlaying}
+              onPlayPause={() => setIsPlaying(!isPlaying)}
+              onNext={() => console.log('Next song')}
+              onPrevious={() => console.log('Previous song')}
+              onLike={() => handleLikeSong(currentSong.id)}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Navigation Tab Area - Fixed at bottom */}
+      <div className="h-16">
+        <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
+      </div>
     </div>
   );
 }
